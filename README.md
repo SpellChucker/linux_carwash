@@ -1,6 +1,6 @@
-## Linux Carwash!
+## Linux Car Wash!
 
-This application will be a simple car-wash application following certain criteria.
+This application will be a simple car wash application following certain criteria.
 It's built fully in Laravel with some front-end components in VueJS.
 The following is a comprehensive list of requirements:
 
