@@ -58,7 +58,6 @@
 
 <script>
   var moment = require('moment')
-  import datepicker from 'vuejs-datepicker'
   export default {
     components: {
       datepicker
