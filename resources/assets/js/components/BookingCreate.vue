@@ -145,12 +145,24 @@
       }
     },
     mounted () {
-      $('.datepicker').datepicker({
-        autoclose: true,
-        startDate: moment().add(-1, 'days').toDate()
-      }).on('changeDate', () => { this.booking.appointment_date = $('#appointment_date').val() });
+      // We have to initialize the datepicker here and in updated because VueJS updates
+      // the dom and jquery loses it's reference.
+      this.initDatepicker();
+    },
+    updated () {
+      // We have to initialize the datepicker here and in updated because VueJS updates
+      // the dom and jquery loses it's reference.
+      this.initDatepicker();
     },
     methods: {
+      initDatepicker () {
+        $('.datepicker').datepicker({
+          autoclose: true,
+          startDate: moment().add(-1, 'days').toDate()
+        }).on('changeDate', () => {
+          this.booking.appointment_date = $('#appointment_date').val()
+        });
+      },
       calculateEstimatedTotal () {
         this.booking.total_cost = 0
 
