@@ -60642,6 +60642,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 var moment = __webpack_require__(0);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60683,8 +60687,8 @@ var moment = __webpack_require__(0);
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('table', {
-    staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.bookings), function(booking) {
+    staticClass: "table table-responsive"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_vm._l((_vm.bookings), function(booking) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(booking.appointment_date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.ucfirst(booking.vehicle.type)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(booking.vehicle.license_plate))]), _vm._v(" "), _c('td', [_c('div', {
       domProps: {
         "innerHTML": _vm._s(_vm.attrList(booking.vehicle.attributes))
@@ -60694,9 +60698,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "colspan": "4"
     }
-  }, [_vm._v("No bookings found")])]) : _vm._e()], 2)])
+  }, [_vm._v("No bookings found")])]) : _vm._e()], 2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('tr', [_c('th', [_vm._v("Booking Time")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Type")]), _vm._v(" "), _c('th', [_vm._v("Vehicle License Plate")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Attributes")]), _vm._v(" "), _c('th', [_vm._v("Total Cost")])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Booking Time")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Type")]), _vm._v(" "), _c('th', [_vm._v("Vehicle License Plate")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Attributes")]), _vm._v(" "), _c('th', [_vm._v("Total Cost")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
