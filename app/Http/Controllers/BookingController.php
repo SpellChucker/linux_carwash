@@ -55,18 +55,23 @@ class BookingController extends Controller
       $booking = new Booking;
 
       // See if we can find a vehicle with the same license plate.
-      $vehicle = Vehicle::where('license_plate', $booking_data['vehicle']['license_plate'])->first();
+      $vehicle = Vehicle::where('license_plate', $booking_data['vehicle']['license_plate'])
+        ->where('state', $booking_data['vehicle']['state'])
+        ->first();
 
       $total_cost = $booking_data['booking']['total_cost'];
+      $discount = false;
       if ($vehicle == null) {
         $vehicle = new Vehicle;
         $vehicle->type = $booking_data['vehicle']['type'];
         $vehicle->license_plate = $booking_data['vehicle']['license_plate'];
+        $vehicle->state = $booking_data['vehicle']['state'];
 
         $vehicle->save();
       } else {
         // Vehicle already exists, so they get 50% off!
         $total_cost = $total_cost * 0.5;
+        $discount = true;
       }
 
       // Vehicles may or may not have attributes.
@@ -88,6 +93,18 @@ class BookingController extends Controller
       $booking->total_cost = $total_cost;
       $booking->vehicle_id = $vehicle->id;
       $booking->save();
+
+      if ($discount) {
+        $message = 'Booking saved with a 50% discount!';
+      } else {
+        $message = 'Booking saved!';
+      }
+
+      $return = [
+        'message' => $message
+      ];
+
+      return json_encode($return);
     }
 
     /**

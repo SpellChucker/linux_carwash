@@ -15,7 +15,9 @@ class CreateVehiclesTable extends Migration {
         $table->increments('id');
         $table->string('type');
         $table->string('license_plate');
+        $table->string('state');
         $table->timestamps();
+        $table->unique(['state', 'license_plate']);
       });
   }
 

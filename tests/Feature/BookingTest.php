@@ -53,6 +53,7 @@ class BookingTest extends TestCase {
     $response->assertStatus(422)
       ->assertJson([
         "Vehicle license plate is required",
+        "Vehicle state is required",
         "Vehicle type is required",
         "Appointment date is required",
         "Booking price is required"
@@ -71,11 +72,39 @@ class BookingTest extends TestCase {
         'total_cost' => '10'
       ], 'vehicle' => [
         'type' => 'truck',
-        'license_plate' => '123123'
+        'license_plate' => '123123',
+        'state' => 'TX'
       ]
     ];
     $response = $this->json('POST', '/booking', $post_json);
 
     $response->assertStatus(200);
+  }
+
+  /**
+   * Ensure posting same vehicle twice gives discount.
+   *
+   * @return void
+   */
+  public function testBookingCreateMultiple() {
+    $post_json = [
+      'booking' => [
+        'appointment_date' => '2017-07-27',
+        'total_cost' => '10'
+      ], 'vehicle' => [
+        'type' => 'truck',
+        'license_plate' => '123123',
+        'state' => '123123'
+      ]
+    ];
+
+    $response = $this->json('POST', '/booking', $post_json);
+
+    $response = $this->json('POST', '/booking', $post_json);
+
+    $response->assertStatus(200)
+      ->assertJson([
+        'message' => 'Booking saved with a 50% discount!'
+      ]);;
   }
 }

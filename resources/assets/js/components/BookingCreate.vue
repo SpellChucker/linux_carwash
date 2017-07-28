@@ -4,8 +4,8 @@
       <div v-if="errors.length" class="alert alert-danger">
         <li v-for="error in errors">{{ error }}</li>
       </div>
-      <div v-if="success" class="alert alert-success">
-        Booking successfully saved!
+      <div v-if="success_message.length" class="alert alert-success">
+        {{ success_message }}
       </div>
       <div v-if="vehicle.attributes.bed_down == 'true'" class="alert alert-info">Trucks with the bed down are not allowed!</div>
       <div class="form-group">
@@ -44,6 +44,64 @@
         <input v-model="vehicle.license_plate" type="text" maxlength="8" placeholder="License Plate Number" class="form-control" required>
       </div>
       <div class="form-group">
+        <label for="license_plate">Vehicle State</label>
+        <select v-model="vehicle.state" class="form-control" required>
+          <option value="">-- Select a State --</option>
+          <option value="AK">Alaska</option>
+          <option value="AL">Alabama</option>
+          <option value="AR">Arkansas</option>
+          <option value="AZ">Arizona</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DC">District of Columbia</option>
+          <option value="DE">Delaware</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="IA">Iowa</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MD">Maryland</option>
+          <option value="ME">Maine</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MO">Missouri</option>
+          <option value="MS">Mississippi</option>
+          <option value="MT">Montana</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="NE">Nebraska</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NV">Nevada</option>
+          <option value="NY">New York</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VA">Virginia</option>
+          <option value="VT">Vermont</option>
+          <option value="WA">Washington</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WV">West Virginia</option>
+          <option value="WY">Wyoming</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="appointment_date">Appointment Date</label>
         <input v-model="booking.appointment_date" id="appointment_date" class="form-control datepicker" placeholder="Appointment Date" required>
       </div>
@@ -68,6 +126,7 @@
         vehicle: {
           type: '',
           license_plate: '',
+          state: '',
           attributes: {
             mud: '',
             bed_down: ''
@@ -81,7 +140,7 @@
         mud_cost: 2,
         car_cost: 5,
         truck_cost: 10,
-        success: false,
+        success_message: '',
         errors: []
       }
     },
@@ -121,7 +180,7 @@
 
         this.$http.post('/booking', data).then(function(response) {
           // Successfully submitted booking. Let the user know.
-          vm.success = true
+          vm.success_message = response.data.message
           // Reset data. A better way would be to create a form object here
           // which has a method to reset all data.
           vm.vehicle = {

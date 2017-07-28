@@ -25,6 +25,7 @@ class BookingRequest extends FormRequest {
   {
     return [
       'vehicle.license_plate' => 'required|not_in:1111111',
+      'vehicle.state' => 'required',
       'vehicle.type' => 'required|in:truck,car',
       'booking.appointment_date' => 'required|date',
       'booking.total_cost' => 'required|valid_price'
@@ -49,6 +50,7 @@ class BookingRequest extends FormRequest {
     return [
       'vehicle.license_plate.required' => 'Vehicle license plate is required',
       'vehicle.license_plate.not_in' => 'VEHICLE IS STOLEN! DO NOT WASH, COULD ERASE EVIDENCE!',
+      'vehicle.state.required' => 'Vehicle state is required',
       'vehicle.type.required' => 'Vehicle type is required',
       'vehicle.type.in' => 'Vehicle type is invalid',
       'booking.appointment_date.required' => 'Appointment date is required',

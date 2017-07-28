@@ -6,6 +6,7 @@
           <th>Booking Time</th>
           <th>Vehicle Type</th>
           <th>Vehicle License Plate</th>
+          <th>Vehicle State</th>
           <th>Vehicle Attributes</th>
           <th>Total Cost</th>
         </tr>
@@ -15,6 +16,7 @@
           <td>{{ booking.appointment_date }}</td>
           <td>{{ ucfirst(booking.vehicle.type) }}</td>
           <td>{{ booking.vehicle.license_plate }}</td>
+          <td>{{ booking.vehicle.state }}</td>
           <td><div v-html="attrList(booking.vehicle.attributes)"></div></td>
           <td>{{ money(booking.total_cost) }}</td>
         </tr>
