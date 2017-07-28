@@ -4,13 +4,15 @@
       <tr>
         <th>Booking Time</th>
         <th>Vehicle Type</th>
+        <th>Vehicle License Plate</th>
         <th>Vehicle Attributes</th>
         <th>Total Cost</th>
       </tr>
       <tr v-for="booking in bookings">
         <td>{{ booking.appointment_date }}</td>
-        <td>{{ booking.vehicle.type }}</td>
-        <td>{{ attrList(booking.vehicle.attributes) }}</td>
+        <td>{{ ucfirst(booking.vehicle.type) }}</td>
+        <td>{{ booking.vehicle.license_plate }}</td>
+        <td><div v-html="attrList(booking.vehicle.attributes)"></div></td>
         <td>{{ money(booking.total_cost) }}</td>
       </tr>
       <tr v-if="bookings.length == 0">
@@ -42,13 +44,16 @@
       attrList(attributes) {
         let attrList = ''
         attributes.forEach(function(attribute) {
-          attrList += attribute.name + ': ' + attribute.value + '\n'
+          attrList += attribute.name + ': ' + attribute.value + '<br />'
         });
 
         return attrList
       },
       money(amount) {
         return '$' + Number(amount).toFixed(2)
+      },
+      ucfirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1)
       }
     }
   }

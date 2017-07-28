@@ -53,12 +53,21 @@ class BookingController extends Controller
       $booking_data = $request->all();
 
       $booking = new Booking;
-      $vehicle = new Vehicle;
 
-      $vehicle->type = $booking_data['vehicle']['type'];
-      $vehicle->license_plate = $booking_data['vehicle']['license_plate'];
+      // See if we can find a vehicle with the same license plate.
+      $vehicle = Vehicle::where('license_plate', $booking_data['vehicle']['license_plate'])->first();
 
-      $vehicle->save();
+      $total_cost = $booking_data['booking']['total_cost'];
+      if ($vehicle == null) {
+        $vehicle = new Vehicle;
+        $vehicle->type = $booking_data['vehicle']['type'];
+        $vehicle->license_plate = $booking_data['vehicle']['license_plate'];
+
+        $vehicle->save();
+      } else {
+        // Vehicle already exists, so they get 50% off!
+        $total_cost = $total_cost * 0.5;
+      }
 
       // Vehicles may or may not have attributes.
       if (!empty($booking_data['vehicle']['attributes'])) {
@@ -76,7 +85,7 @@ class BookingController extends Controller
 
       // Now that we have a saved vehicle, we can associate this booking to the vehicle.
       $booking->appointment_date = date('Y-m-d', strtotime($booking_data['booking']['appointment_date']));
-      $booking->total_cost = $booking_data['booking']['total_cost'];
+      $booking->total_cost = $total_cost;
       $booking->vehicle_id = $vehicle->id;
       $booking->save();
     }

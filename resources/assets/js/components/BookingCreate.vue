@@ -12,7 +12,7 @@
         <label for="vehicle_type">Vehicle type</label>
         <br />
         <label class="radio-inline">
-          <input @change="calculateEstimatedTotal" v-model="vehicle.type" type="radio" name="vehicle_type" value="car"> Car
+          <input @change="calculateEstimatedTotal" v-model="vehicle.type" type="radio" name="vehicle_type" value="car" required> Car
         </label>
         <label class="radio-inline">
           <input @change="calculateEstimatedTotal" v-model="vehicle.type" type="radio" name="vehicle_type" value="truck"> Truck
@@ -41,11 +41,11 @@
       </div>
       <div class="form-group">
         <label for="license_plate">License plate</label>
-        <input v-model="vehicle.license_plate" type="text" maxlength="8" placeholder="License Plate Number" class="form-control">
+        <input v-model="vehicle.license_plate" type="text" maxlength="8" placeholder="License Plate Number" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="appointment_date">Appointment Date</label>
-        <datepicker v-model="booking.appointment_date" :disabled="date_range.disabled" input-class="form-control" placeholder="Appointment Date"></datepicker>
+        <input v-model="booking.appointment_date" id="appointment_date" class="form-control datepicker" placeholder="Appointment Date" required>
       </div>
       <div class="form-group">
         <label for="cost">Total Cost</label>
@@ -88,6 +88,12 @@
         success: false,
         errors: []
       }
+    },
+    mounted () {
+      $('.datepicker').datepicker({
+        autoclose: true,
+        startDate: moment().add(-1, 'days').toDate()
+      }).on('changeDate', () => { this.booking.appointment_date = $('#appointment_date').val() });
     },
     methods: {
       calculateEstimatedTotal () {

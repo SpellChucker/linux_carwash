@@ -59996,6 +59996,16 @@ var moment = __webpack_require__(0);
       errors: []
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    $('.datepicker').datepicker({
+      autoclose: true,
+      startDate: moment().add(-1, 'days').toDate()
+    }).on('changeDate', function () {
+      _this.booking.appointment_date = $('#appointment_date').val();
+    });
+  },
 
   methods: {
     calculateEstimatedTotal: function calculateEstimatedTotal() {
@@ -60348,7 +60358,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "radio",
       "name": "vehicle_type",
-      "value": "car"
+      "value": "car",
+      "required": ""
     },
     domProps: {
       "checked": _vm._q(_vm.vehicle.type, "car")
@@ -60503,7 +60514,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "text",
       "maxlength": "8",
-      "placeholder": "License Plate Number"
+      "placeholder": "License Plate Number",
+      "required": ""
     },
     domProps: {
       "value": (_vm.vehicle.license_plate)
@@ -60520,20 +60532,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "appointment_date"
     }
-  }, [_vm._v("Appointment Date")]), _vm._v(" "), _c('datepicker', {
-    attrs: {
-      "disabled": _vm.date_range.disabled,
-      "input-class": "form-control",
-      "placeholder": "Appointment Date"
-    },
-    model: {
+  }, [_vm._v("Appointment Date")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
       value: (_vm.booking.appointment_date),
-      callback: function($$v) {
-        _vm.booking.appointment_date = $$v
-      },
       expression: "booking.appointment_date"
+    }],
+    staticClass: "form-control datepicker",
+    attrs: {
+      "id": "appointment_date",
+      "placeholder": "Appointment Date",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.booking.appointment_date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.booking.appointment_date = $event.target.value
+      }
     }
-  })], 1), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -60619,6 +60640,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 var moment = __webpack_require__(0);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60640,13 +60663,16 @@ var moment = __webpack_require__(0);
     attrList: function attrList(attributes) {
       var attrList = '';
       attributes.forEach(function (attribute) {
-        attrList += attribute.name + ': ' + attribute.value + '\n';
+        attrList += attribute.name + ': ' + attribute.value + '<br />';
       });
 
       return attrList;
     },
     money: function money(amount) {
       return '$' + Number(amount).toFixed(2);
+    },
+    ucfirst: function ucfirst(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   }
 });
@@ -60659,14 +60685,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('table', {
     staticClass: "table"
   }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.bookings), function(booking) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(booking.appointment_date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(booking.vehicle.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.attrList(booking.vehicle.attributes)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.money(booking.total_cost)))])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(booking.appointment_date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.ucfirst(booking.vehicle.type)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(booking.vehicle.license_plate))]), _vm._v(" "), _c('td', [_c('div', {
+      domProps: {
+        "innerHTML": _vm._s(_vm.attrList(booking.vehicle.attributes))
+      }
+    })]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.money(booking.total_cost)))])])
   }), _vm._v(" "), (_vm.bookings.length == 0) ? _c('tr', [_c('td', {
     attrs: {
       "colspan": "4"
     }
   }, [_vm._v("No bookings found")])]) : _vm._e()], 2)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('tr', [_c('th', [_vm._v("Booking Time")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Type")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Attributes")]), _vm._v(" "), _c('th', [_vm._v("Total Cost")])])
+  return _c('tr', [_c('th', [_vm._v("Booking Time")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Type")]), _vm._v(" "), _c('th', [_vm._v("Vehicle License Plate")]), _vm._v(" "), _c('th', [_vm._v("Vehicle Attributes")]), _vm._v(" "), _c('th', [_vm._v("Total Cost")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
