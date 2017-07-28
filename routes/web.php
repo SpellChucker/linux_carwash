@@ -12,5 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
+
+Route::get('/booking/loadAll', 'BookingController@loadAll');
+Route::resource('/booking', 'BookingController');

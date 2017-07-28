@@ -1,0 +1,12 @@
+// Required padding for .navbar-fixed-top
+body { padding-top: 50px; }
+
+#navbar {
+ padding-right: 15px;
+ box-shadow: 0 2px 4px 0 rgba(71, 85, 89, 0.1);
+
+ li.active > a {
+	 background: $navbar-default-bg;
+	 border-bottom: 2px solid $primary;
+ }
+}
