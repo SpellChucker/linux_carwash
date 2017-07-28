@@ -59,9 +59,6 @@
 <script>
   var moment = require('moment')
   export default {
-    components: {
-      datepicker
-    },
     data () {
       return {
         booking: {
